@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:globesisters_test/post.dart';
+import 'package:globesisters_test/profile.dart';
 
 import '../feed.dart';
 
@@ -6,19 +8,19 @@ class DefaultBottomNavigationBar extends StatelessWidget {
   final String root;
   static final navRoots = [
     Feed.routeName,
+    Post.routeName,
+    Profile.routeName,
   ];
 
   const DefaultBottomNavigationBar({super.key, required this.root});
 
-  void _navigationChange(int index) {
-    ;
-  }
-
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-        onTap: (int index) =>
-            Navigator.pushReplacementNamed(context, navRoots[index]),
+        currentIndex: navRoots.indexOf(root),
+        onTap: (int index) => (navRoots[index] != root)
+            ? Navigator.pushReplacementNamed(context, navRoots[index])
+            : null,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
@@ -26,7 +28,7 @@ class DefaultBottomNavigationBar extends StatelessWidget {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.add),
-            label: "Create",
+            label: "Post",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:globesisters_test/feed.dart';
+import 'package:globesisters_test/post.dart';
+import 'package:globesisters_test/profile.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,11 +16,33 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
+            primaryColor: Colors.blue,
+            backgroundColor: Colors.white,
+            textTheme: const TextTheme(
+              bodyText1: TextStyle(
+                fontSize: 22.0,
+                fontStyle: FontStyle.italic,
+                fontWeight: FontWeight.w300,
+                color: Colors.black,
+              ),
+              bodyText2: TextStyle(
+                fontSize: 16.0,
+                color: Colors.black,
+              ),
+              headline3: TextStyle(
+                fontSize: 50.0,
+                color: Colors.white,
+              ),
+              headline4: TextStyle(
+                  color: Colors.blue,
+                  fontStyle: FontStyle.normal,
+                  fontSize: 28.0),
+            )),
         initialRoute: '/',
         routes: {
-          Feed.routeName: (context) => Feed(),
+          Feed.routeName: (context) => const Feed(),
+          Post.routeName: (context) => const Post(),
+          Profile.routeName: (context) => Profile(),
         });
   }
 }
