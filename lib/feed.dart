@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:globesisters_test/reusable_widgets/default_app_bar.dart';
 import 'package:globesisters_test/reusable_widgets/default_bottom_navigation_bar.dart';
 
 class Feed extends StatefulWidget {
-  static const routeName = '/';
+  static const String routeName = '/';
+  const Feed({super.key});
 
-  _FeedState createState() => _FeedState();
+  @override
+  FeedState createState() => FeedState();
 }
 
-class _FeedState extends State<Feed> {
+class FeedState extends State<Feed> {
   List<String> _imageUrls = List.empty(growable: true);
 
   List<String> populateUrls() {
@@ -15,6 +18,8 @@ class _FeedState extends State<Feed> {
     return [
       "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/640px-Image_created_with_a_mobile_phone.png",
       "https://cdn.searchenginejournal.com/wp-content/uploads/2022/06/image-search-1600-x-840-px-62c6dc4ff1eee-sej-1280x720.png",
+      "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg",
+      "https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aHVtYW58ZW58MHx8MHx8&w=1000&q=80",
     ];
   }
 
@@ -28,20 +33,17 @@ class _FeedState extends State<Feed> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Feed"),
-        elevation: 0.0,
-      ),
+      appBar: const DefaultAppBar(title: "Feed"),
       body: Column(
         children: [
           Expanded(
-            child: ListView.separated(
+            child: GridView.builder(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2),
               itemCount: _imageUrls.length,
               itemBuilder: (BuildContext context, int index) {
-                return Post(imageUrl: _imageUrls[index]);
+                return _FeedItem(imageUrl: _imageUrls[index]);
               },
-              separatorBuilder: (BuildContext context, int index) =>
-                  const Divider(),
             ),
           )
         ],
@@ -52,18 +54,20 @@ class _FeedState extends State<Feed> {
   }
 }
 
-class Post extends StatelessWidget {
+class _FeedItem extends StatelessWidget {
   final String imageUrl;
 
-  const Post({
-    super.key,
+  const _FeedItem({
     required this.imageUrl,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Image(
-      image: NetworkImage(imageUrl),
-    );
+    return FittedBox(
+        clipBehavior: Clip.hardEdge,
+        fit: BoxFit.cover,
+        child: Image(
+          image: NetworkImage(imageUrl),
+        ));
   }
 }
