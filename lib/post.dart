@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:globesisters_test/reusable_widgets/default_app_bar.dart';
 import 'package:globesisters_test/reusable_widgets/default_bottom_navigation_bar.dart';
+import 'package:intl/intl.dart';
 
 class Post extends StatefulWidget {
   static const String routeName = '/post';
@@ -32,7 +33,7 @@ class PostState extends State<Post> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ConstrainedBox(
-                  constraints: BoxConstraints.tight(const Size(200, 50)),
+                  constraints: BoxConstraints.tight(const Size(300, 50)),
                   child: TextFormField(
                     controller: _postContentController,
                   )),
@@ -73,10 +74,24 @@ class _Post extends StatelessWidget {
       children: [
         Expanded(
             child: Container(
-          padding: const EdgeInsets.all(20),
-          decoration: const BoxDecoration(color: Colors.grey),
-          child: Text(text),
-        ))
+                margin: const EdgeInsets.only(left: 20, right: 20),
+                padding: const EdgeInsets.all(20),
+                decoration:
+                    BoxDecoration(color: Theme.of(context).backgroundColor),
+                child: Column(children: [
+                  Row(children: [
+                    Flexible(child: Text(text)),
+                  ]),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Container(
+                          padding: const EdgeInsets.only(right: 10),
+                          child: Text(DateFormat('M/dd - kk:mm').format(time),
+                              style: Theme.of(context).textTheme.headline5))
+                    ],
+                  )
+                ])))
       ],
     );
   }
